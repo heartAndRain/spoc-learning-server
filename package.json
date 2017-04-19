@@ -1,0 +1,28 @@
+{
+  "name": "spoc-learning-server",
+  "version": "1.0.0",
+  "description": "spoc learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "tsc && node built/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heartAndRain/spoc-learning-server.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/heartAndRain/spoc-learning-server/issues"
+  },
+  "homepage": "https://github.com/heartAndRain/spoc-learning-server#readme",
+  "dependencies": {
+    "graphql": "^0.9.3",
+    "graphql-server-koa": "^0.7.1",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.1.1"
+  }
+}

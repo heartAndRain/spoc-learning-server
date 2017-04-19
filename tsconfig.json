@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "typeRoots": [
+            "typings/modules/"
+        ],
+        "noImplicitAny": true,
+        "experimentalDecorators": true,
+        "sourceMap": false,
+        "rootDir": ".",
+        "outDir": "built"
+    },
+    "filesGlob": [
+        "typings/**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "built"
+    ]
+}

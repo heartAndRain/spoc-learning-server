@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "koa": "registry:dt/koa#2.0.0+20170311193110",
+    "koa-bodyparser": "registry:dt/koa-bodyparser#3.0.0+20170120190901",
+    "koa-router": "registry:dt/koa-router#7.0.0+20170316163447"
+  }
+}
