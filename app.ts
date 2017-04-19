@@ -11,14 +11,24 @@ const router = new KoaRouter()
 const schema = buildSchema(`
     type Query {
         hello: String
+        list: [Int]
     }
 `)
+
+const root = {
+    hello() {
+        return 'hello'
+    },
+    list() {
+        return [1,2,3]
+    }
+}
 
 app.use(KoaBody())
 
 
-router.post('/api', graphqlKoa({schema}))
-router.get('/api', graphqlKoa({schema}))
+router.post('/api', graphqlKoa({schema, rootValue: root}))
+router.get('/api', graphqlKoa({schema, rootValue: root}))
 
 app.use(router.routes())
 app.use(router.allowedMethods())
