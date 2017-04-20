@@ -26,6 +26,37 @@ const root = {
 
 app.use(KoaBody())
 
+import UserModels from './models/User'
+
+import AsyncErrorHandler from './utils/async-error-handler'
+
+
+
+
+class Test {
+    @AsyncErrorHandler
+    async insert(str: string) {
+
+        const result = await UserModels.getUserByUsername('lixiny')
+
+        if (result) {
+            console.log('result', result)
+        } else {
+            console.log('failed')
+        }
+    }
+}
+
+
+const test = new Test()
+test.insert('hello')
+
+
+
+
+
+
+
 
 router.post('/api', graphqlKoa({schema, rootValue: root}))
 router.get('/api', graphqlKoa({schema, rootValue: root}))

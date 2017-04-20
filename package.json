@@ -21,8 +21,12 @@
   "dependencies": {
     "graphql": "^0.9.3",
     "graphql-server-koa": "^0.7.1",
+    "invariant": "^2.2.2",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.1.1"
-  }
+    "koa-router": "^7.1.1",
+    "log4js": "^1.1.1",
+    "mongodb": "^2.2.26"
+  },
+  "devDependencies": {}
 }
