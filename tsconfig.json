@@ -4,16 +4,17 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "typeRoots": [
-            "typings/modules/"
+            "./node_modules/@types/",
+            "./typings/modules/"
         ],
         "noImplicitAny": true,
         "experimentalDecorators": true,
         "sourceMap": false,
-        "rootDir": ".",
+        "rootDir": "src",
         "outDir": "built"
     },
     "filesGlob": [
-        "typings/**/*.d.ts"
+        "typings/modules"
     ],
     "exclude": [
         "node_modules",
