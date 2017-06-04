@@ -4,6 +4,8 @@ import * as KoaBody from 'koa-bodyparser'
 import * as KoaJwt from 'koa-jwt'
 
 import { MongoClient } from 'mongodb'
+import {DB} from './database'
+import { DB_URL } from './database/static'
 
 import { buildSchema } from 'graphql'
 import { graphqlKoa, graphiqlKoa} from 'graphql-server-koa'
@@ -42,4 +44,12 @@ router.get('/graphiql', graphiqlKoa({ endpointURL: '/api' }))
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-app.listen(3000)
+
+
+MongoClient.connect(DB_URL + '/spoc', (err, db) => {
+    if (err) {
+        throw new Error('数据库连接失败')
+    }
+    DB.setConnection(db)
+    app.listen(3000)
+})

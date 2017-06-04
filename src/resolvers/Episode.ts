@@ -1,7 +1,6 @@
 import {IResolver} from './IResolver'
-import CourseModels from '../models/Course'
-import HomeworkModels from '../models/Homework'
-
+import Course from '../models/Course'
+import Homework from '../models/Homework'
 
 export const Episode: IResolver = {
     episodeId(obj, args, context) {
@@ -14,7 +13,7 @@ export const Episode: IResolver = {
         return obj.name
     },
     itemList(obj, args, context) {
-        return CourseModels.getCourseItemById(obj.itemList)
+        return Course.getCourseItemById(obj.itemList)
     }
 }
 
@@ -32,37 +31,9 @@ export const EpisodeItem: IResolver = {
         return obj.video
     },
     source(obj, args, context) {
-        return CourseModels.getSourseById(obj.source)
+        return Course.getSourseById(obj.source)
     },
     homework(obj, args, context) {
-        return HomeworkModels.getHomeworkById(obj.homework)
+        return Homework.getHomeworkById(obj.homework)
     }
 }
-
-
-// {
-//     "_id" : 3001,
-//     "name" : "数据结构与算法",
-//     "type" : 0,
-//     "introduce" : "这里是课程介绍",
-//     "category" : 2000,
-//     "cover" : "shujujiegou.jpeg",
-//     "teacher" : 1017,
-//     "episodes": [
-//         {
-//             "type": 0,
-//             "itemList": [
-            
-//                 {
-//                       "name": "介绍",
-//                       "introduce": "这里是课程的介绍",
-//                       "video": "test.wmv",
-//                       "source": [
-                        
-//                     ]
-//                 }
-//             ]
-            
-//         }
-//     ]
-// }

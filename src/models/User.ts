@@ -1,4 +1,6 @@
 import BaseModel from './BaseModel'
+import IModel from './IModel'
+import {DB, DBType} from '../database'
 
 export interface User {
     _id?: number
@@ -11,6 +13,7 @@ export interface User {
     stat: 'normal' | 'exception'
 }
 
+
 class UserModels extends BaseModel {
 
     /**
@@ -18,10 +21,8 @@ class UserModels extends BaseModel {
      * @param user 用户
      */
     async insertOneUser(user: User) {
-        return super.transaction(async (db) => {
-            const userId = await super.getNextSequence(db, 'userId')
-            return db.collection('user').insertOne(Object.assign({}, user, {_id: +userId}))
-        })
+        const userId = await super.getNextSequence('userId')
+        return this.cnt.collection('user').insertOne(Object.assign({}, user, {_id: +userId}))
     }
 
     /**
@@ -30,11 +31,9 @@ class UserModels extends BaseModel {
      */
 
      async getUserByUserId(userId: number) {
-         return super.transaction((db) => {
-             return db.collection('user').findOne({
-                 _id: userId
-             })
-         })
+        return this.cnt.collection('user').findOne({
+            _id: userId
+        })
      }
 
 
@@ -43,9 +42,7 @@ class UserModels extends BaseModel {
      * @param username 用户名
      */
     async getUserByUsername(username: string) {
-        return super.transaction<User>((db) => {
-            return db.collection('user').findOne({username})
-        })
+        return this.cnt.collection('user').findOne({username})
     }
 
     /**
@@ -54,12 +51,10 @@ class UserModels extends BaseModel {
      * @param courseId 课程ID
      */
     async selectOneCourse(userId: number, courseId: number) {
-        return super.transaction((db) => {
-            return db.collection('user').updateOne(
-                { _id: userId },
-                { $addToSet: { selectedCourse: courseId } }
-            )
-        })
+        return this.cnt.collection('user').updateOne(
+            { _id: userId },
+            { $addToSet: { selectedCourse: courseId } }
+        )
     }
 }
 

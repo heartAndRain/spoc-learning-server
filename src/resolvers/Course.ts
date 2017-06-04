@@ -1,7 +1,7 @@
 import {IResolver} from './IResolver'
-import CategoryModels from '../models/Category'
-import UserModels from '../models/User'
-import CourseModels from '../models/Course'
+import Category from '../models/Category'
+import User from '../models/User'
+import CourseModel from '../models/Course'
 
 export const Course: IResolver = {
     courseId(obj, args, context) {
@@ -19,17 +19,17 @@ export const Course: IResolver = {
     },
     category(obj, args, context) {
         const categoryId = +obj.category
-        return CategoryModels.getCourseCategory(categoryId)
+        return Category.getCourseCategory(categoryId)
     },
     cover(obj, args, context) {
         return obj.cover
     },
     teacher(obj, args, context) {
         const userId = +obj.teacher
-        return UserModels.getUserByUserId(userId)
+        return User.getUserByUserId(userId)
     },
     async episodes(obj, args, context) {
-        let a = await CourseModels.getEpisodeById(obj.episodes)
+        let a = await CourseModel.getEpisodeById(obj.episodes)
         
         return a
     },

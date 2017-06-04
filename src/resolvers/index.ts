@@ -10,7 +10,6 @@ import CourseModels from '../models/Course'
 import CategoryModels from '../models/Category'
 import HomeworkModels from '../models/Homework'
 
-
 export const resolversMap = {
     Query: {
         currentUser(obj: any, args: any, context: any) {
@@ -34,10 +33,10 @@ export const resolversMap = {
     },
     Mutation: {
         addNewCourse(obj: any, {name, cover, type, introduce, category}: any, context: any) {
-            console.log(name)
             return CourseModels.insertOneCourse({name, cover, type, introduce, category,teacher: context.user.userId})
         },
         addNewEpisodes(obj: any, {courseId, type, name}: any, context: any) {
+
             return CourseModels.addNewEpisode(courseId, type, name)
         },
         selectCourse(obj: any, {courseId}: any, context: any) {

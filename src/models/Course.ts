@@ -25,10 +25,8 @@ class CourseModel extends BaseModel {
      * @param courseId 课程id
      */
     async getCourseById(courseId: number) {
-        return super.transaction<Course>((db) => {
-            return db.collection('course').findOne({
-                _id: courseId
-            })
+        return this.cnt.collection('course').findOne({
+            _id: courseId
         })
     }
     /**
@@ -36,11 +34,9 @@ class CourseModel extends BaseModel {
      * @param userId 用户id
      */
     async getUserCreatedCourse(userId: number) {
-        return super.transaction<Course[]>((db) => {
-            return db.collection('course').find({
-                teacher: +userId
-            }).toArray()
-        })
+        return this.cnt.collection('course').find({
+            teacher: +userId
+        }).toArray()
     }
 
     /**
@@ -48,13 +44,11 @@ class CourseModel extends BaseModel {
      * @param course 课程对象
      */
     async insertOneCourse(course: Course) {
-        return super.transaction<Course>(async (db) => {
-            const courseId = await super.getNextSequence(db, 'courseId')
-            return db.collection('course').insertOne(Object.assign({}, course, {
-                _id: courseId,
-                episodes: []
-            }))
-        })
+        const courseId = await this.getNextSequence('courseId')
+        return this.cnt.collection('course').insertOne(Object.assign({}, course, {
+            _id: courseId,
+            episodes: []
+        }))
     }
 
     /**
@@ -63,34 +57,31 @@ class CourseModel extends BaseModel {
      */
     async getEpisodeById(epsId: string | string[]) {
 
-        return super.transaction((db) => {
-            if (typeof epsId === 'string') {
-                return db.collection('course_episode').findOne({
-                    _id: new ObjectID(epsId as string)
-                })
-            }
-            
-            return Promise.all(epsId.map((id) => {
-                return db.collection('course_episode').findOne({
-                    _id: new ObjectID(id)
-                })
-            }))
-        })
+        if (typeof epsId === 'string') {
+            return this.cnt.collection('course_episode').findOne({
+                _id: new ObjectID(epsId as string)
+            })
+        }
+        
+        return Promise.all(epsId.map((id) => {
+            return this.cnt.collection('course_episode').findOne({
+                _id: new ObjectID(id)
+            })
+        }))
     }
 
     async addNewEpisode(courseId: number, type: number, name: string = '') {
-        return super.transaction(async (db) => {
-            const insertResult = await db.collection('course_episode').insertOne({
-                type,
-                name,
-                itemList: []
-            })
+        
+        const insertResult = await this.cnt.collection('course_episode').insertOne({
+            type,
+            name,
+            itemList: []
+        })
 
-            if (insertResult.result.ok !== 1) return Promise.reject('新建episode失败')
-            
-            return db.collection('course').updateOne({_id: courseId}, {
-                $addToSet: {episodes: insertResult.insertedId}
-            })
+        if (insertResult.result.ok !== 1) return Promise.reject('新建episode失败')
+        
+        return this.cnt.collection('course').updateOne({_id: courseId}, {
+            $addToSet: {episodes: insertResult.insertedId}
         })
     }
 
@@ -99,35 +90,32 @@ class CourseModel extends BaseModel {
      * @param itemId 课程内容项目id
      */
     async getCourseItemById(itemId: string | string[]) {
-        return super.transaction((db) => {
-            if (typeof itemId === 'string') {
-                return db.collection('course_item').findOne({
-                    _id: new ObjectID(itemId as string) 
-                })
-            }
+        if (typeof itemId === 'string') {
+            return this.cnt.collection('course_item').findOne({
+                _id: new ObjectID(itemId as string) 
+            })
+        }
 
-            return Promise.all(itemId.map((id) => {
-                return db.collection('course_item').findOne({
-                    _id: new ObjectID(id)
-                })
-            }))
-        })
+        return Promise.all(itemId.map((id) => {
+            return this.cnt.collection('course_item').findOne({
+                _id: new ObjectID(id)
+            })
+        }))
     }
 
     async getSourseById(sourceId: string | string[]) {
-        return super.transaction((db) => {
-            if (typeof sourceId === 'string') {
-                return db.collection('source').findOne({
-                    _id: new ObjectID(sourceId as string) 
-                })
-            }
+        
+        if (typeof sourceId === 'string') {
+            return this.cnt.collection('source').findOne({
+                _id: new ObjectID(sourceId as string) 
+            })
+        }
 
-            return Promise.all(sourceId.map((id) => {
-                return db.collection('source').findOne({
-                    _id: new ObjectID(id)
-                })
-            }))
-        })
+        return Promise.all(sourceId.map((id) => {
+            return this.cnt.collection('source').findOne({
+                _id: new ObjectID(id)
+            })
+        }))
     }
 
 }

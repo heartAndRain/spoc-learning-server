@@ -21,9 +21,7 @@ class CategoryModels extends BaseModel {
      * 获取学科目录列表
      */
     async getCategoryList() {
-        return super.transaction<Category[]>(async (db) => {
-            return db.collection('category').find({}).toArray()
-        })
+        return this.cnt.collection('category').find({}).toArray()
     }
 
     /**
@@ -31,10 +29,8 @@ class CategoryModels extends BaseModel {
      * @param categoryId 学科id
      */
     async getCourseCategory(categoryId: number) {
-        return super.transaction<Category>(async (db) => {
-            return db.collection('category').findOne({
-                _id: categoryId
-            })
+        return this.cnt.collection('category').findOne({
+            _id: categoryId
         })
     }
 }

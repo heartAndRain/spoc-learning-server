@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken'
 
 import UserModels from '../models/User'
 
+
 export async function Login(ctx: Koa.Context, next: () => Promise<any>) {
     if (ctx.request.method.toLowerCase() === 'post'
         && ctx.request.path === '/login') {

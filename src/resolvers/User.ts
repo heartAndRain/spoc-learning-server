@@ -1,6 +1,8 @@
 import {IResolver} from './IResolver'
 import CourseModels from '../models/Course'
 
+
+
 export const User: IResolver = {
     userId(obj, args, context) {
         return obj._id
@@ -21,7 +23,7 @@ export const User: IResolver = {
     stat(obj, args, context) {
         return obj.stat
     },
-    selectedCourse(obj, args, context) {
+    async selectedCourse(obj, args, context) {
         if (!obj.selectedCourse) return []
         return obj.selectedCourse.map(async (courseId: number) => {
             return await CourseModels.getCourseById(courseId)

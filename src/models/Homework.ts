@@ -18,19 +18,18 @@ class HomeworkModels extends BaseModel {
      * @param hwId 作业id
      */
     async getHomeworkById(hwId: string | string[]) {
-        return super.transaction((db) => {
-            if (typeof hwId === 'string') {
-                return db.collection('homework').findOne({
-                    _id: new ObjectID(hwId as string)
-                })
-            }
-            
-            return Promise.all(hwId.map((id) => {
-                return db.collection('homework').findOne({
-                    _id: new ObjectID(id)
-                })
-            }))
-        })
+        
+        if (typeof hwId === 'string') {
+            return this.cnt.collection('homework').findOne({
+                _id: new ObjectID(hwId as string)
+            })
+        }
+        
+        return Promise.all(hwId.map((id) => {
+            return this.cnt.collection('homework').findOne({
+                _id: new ObjectID(id)
+            })
+        }))
     }
     /**
      * 获取作业成绩
@@ -38,11 +37,10 @@ class HomeworkModels extends BaseModel {
      * @param hwId 作业ID
      */
     async getHomeworkScore(userId: number, hwId: string) {
-        return super.transaction(async (db) => {
-            return db.collection('score').findOne({
-                userId,
-                hwId
-            })
+        
+        return this.cnt.collection('score').findOne({
+            userId,
+            hwId
         })
     }
 
