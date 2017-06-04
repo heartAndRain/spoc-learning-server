@@ -1,0 +1,17 @@
+type User {
+    userId: Int
+    username: String
+    nickname: String
+    role: String
+    stat: String
+    school: String
+    selectedCourse: [Course]!
+    createdCourse: [Course]!
+}
+
+type UserInfo{
+    userId: Int
+    username: String
+    role: String
+    stat: String
+}

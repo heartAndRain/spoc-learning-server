@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "tsc && node built/app.js"
+    "start": "tsc && supervisor -w --debug built built/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,14 +19,21 @@
   },
   "homepage": "https://github.com/heartAndRain/spoc-learning-server#readme",
   "dependencies": {
+    "formidable": "^1.1.1",
     "graphql": "^0.9.3",
     "graphql-server-koa": "^0.7.1",
+    "graphql-tools": "^0.11.0",
     "invariant": "^2.2.2",
+    "jsonwebtoken": "^7.4.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-jwt": "^3.2.1",
     "koa-router": "^7.1.1",
     "log4js": "^1.1.1",
-    "mongodb": "^2.2.26"
+    "mongodb": "^2.2.26",
+    "qiniu": "^6.1.13"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "supervisor": "^0.12.0"
+  }
 }

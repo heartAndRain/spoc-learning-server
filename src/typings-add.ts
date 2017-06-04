@@ -12,3 +12,7 @@ declare module 'invariant' {
     function invariant (condition: boolean | string, message: string, ...args: string[]): void;
     export default invariant;
 }
+
+declare module 'graphql-tools' {
+    export function makeExecutableSchema ({typeDefs, resolvers}: {typeDefs: any, resolvers: any}):any
+}

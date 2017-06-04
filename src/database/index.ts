@@ -1,4 +1,4 @@
-import { MongoClient, MongoError, Db } from 'mongodb'
+import { MongoClient, MongoError, Db,  } from 'mongodb'
 import { DB_URL } from './static'
 
 export type MongoClient = MongoClient

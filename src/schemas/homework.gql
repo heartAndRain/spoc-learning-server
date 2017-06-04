@@ -1,0 +1,36 @@
+type Homework {
+    #作业ID
+    hwId: String
+    # 作业类型
+    type: Int
+    # 名称
+    name: String
+
+    # 截止日期
+    deadline: String
+
+    # 得分
+    score: Int
+
+    # 是否通过
+    pass: Int
+
+    # 题目
+    questions: [Question]
+}
+
+
+type Question {
+    # 题干
+    title: String!
+    # 选项
+    options: [SelectOption]
+}
+
+# 选项类型
+type SelectOption {
+    index: Int
+    content: String
+}
+
+

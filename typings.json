@@ -1,8 +1,11 @@
 {
   "dependencies": {
     "express": "registry:npm/express#4.14.0+20170217205433",
+    "formidable": "registry:dt/formidable#1.0.16+20160510010627",
+    "jsonwebtoken": "registry:dt/jsonwebtoken#7.2.0+20161229235100",
     "koa": "registry:dt/koa#2.0.0+20170311193110",
     "koa-bodyparser": "registry:dt/koa-bodyparser#3.0.0+20170120190901",
+    "koa-jwt": "registry:dt/koa-jwt#2.1.0+20170324151803",
     "koa-router": "registry:dt/koa-router#7.0.0+20170316163447",
     "log4js": "registry:dt/log4js#0.0.0+20160726182927",
     "mongodb": "registry:dt/mongodb#2.1.0+20170212052546"

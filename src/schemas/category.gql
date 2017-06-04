@@ -1,0 +1,8 @@
+type Category {
+    # 学科ID
+    categoryId: Int
+    # 学科名称
+    name: String
+    # 学科封面
+    cover: String
+}

@@ -1,0 +1,30 @@
+type Episode {
+    # 片段Id
+    episodeId: String!
+
+    # 片段类型 与课程类型一致
+    type: Int!
+    # 片段名称 只有在 非周类型 的课程才有意义
+    name: String!
+
+    # 内容列表
+    itemList: [EpisodeItem]
+} 
+
+type EpisodeItem {
+    # 项目ID
+    itemId: String
+    # 内容题目
+    name: String
+    # 重点，介绍
+    introduce: String
+    # 课程视频
+    video: String
+    # 课程资源列表
+    source: [Source]
+    # 课程作业
+    homework: [Homework]
+}
+
+
+

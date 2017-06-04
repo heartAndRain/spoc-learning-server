@@ -1,0 +1,36 @@
+type Query {
+    # 获取当前用户信息
+    currentUser: UserInfo
+    # 获取用户信息
+    user(id: ID!): User
+
+    # 获取课程信息
+    course(id: ID!): Course
+    # 获取作业信息
+    homework(id: ID!): Homework
+    # 获取学科列表
+    categoryList: [Category]
+}
+
+type Mutation {
+    # 增加新课程
+    addNewCourse(
+        name: String!,
+        cover: String!,
+        type: Int!,
+        introduce: String,
+        category: Int!
+    ): Boolean
+
+    # 增加新Episodes
+    addNewEpisodes(
+        courseId: Int!,
+        type: Int!,
+        name: String
+    ): Boolean
+    
+    # 用户选课
+    selectCourse(
+        courseId: Int!
+    ): Boolean
+}

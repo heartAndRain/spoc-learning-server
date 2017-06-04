@@ -1,0 +1,18 @@
+type Course {
+    # 课程id
+    courseId: Int
+    # 课程名称
+    name: String
+    # 课程类型
+    type: Int
+    # 课程介绍
+    introduce: String
+    # 课程所属学科
+    category: Category
+    # 课程封面图
+    cover: String
+    # 课程教师
+    teacher: User
+    # 课程内容
+    episodes: [Episode]
+}

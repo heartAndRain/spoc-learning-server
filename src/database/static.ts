@@ -1,1 +1,1 @@
-export const DB_URL = ''
+export const DB_URL = 'mongodb://localhost:27017'

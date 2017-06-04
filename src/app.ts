@@ -1,69 +1,45 @@
 import * as Koa from 'koa'
-import { graphqlKoa } from 'graphql-server-koa'
 import * as KoaRouter from 'koa-router'
 import * as KoaBody from 'koa-bodyparser'
+import * as KoaJwt from 'koa-jwt'
+
+import { MongoClient } from 'mongodb'
 
 import { buildSchema } from 'graphql'
+import { graphqlKoa, graphiqlKoa} from 'graphql-server-koa'
+import {makeExecutableSchema} from 'graphql-tools'
+
+import {Login}  from './middlewares/login'
+import {Upload} from './middlewares/upload'
+
+import {buildDirSchema} from './utils/buildDirSchema'
+import {resolversMap} from './resolvers'
 
 const app = new Koa()
 const router = new KoaRouter()
 
-const schema = buildSchema(`
-    type Query {
-        hello: String
-        list: [Int]
-    }
-`)
-
-const root = {
-    hello() {
-        return 'hello'
-    },
-    list() {
-        return [1,2,3]
-    }
-}
 
 app.use(KoaBody())
-
-import UserModels from './models/User'
-
-import AsyncErrorHandler from './utils/async-error-handler'
+app.use(Login)
 
 
+app.use(KoaJwt({
+    secret: 'hellospoc'
+}))
 
+const schema = makeExecutableSchema({
+    typeDefs: buildDirSchema('src/schemas'),
+    resolvers: resolversMap
+})
 
-class Test {
-    @AsyncErrorHandler
-    async insert(str: string) {
+router.post('/upload', Upload)
+router.post('/api', (ctx) => (graphqlKoa({schema, context: {user: ctx.state.user}})(ctx)))
+router.get('/api', (ctx) => (graphqlKoa({schema, context: {user: ctx.state.user}})(ctx)))
 
-        const result = await UserModels.getUserByUsername('lixiny')
-
-        if (result) {
-            console.log('result', result)
-        } else {
-            console.log('failed')
-        }
-    }
-}
-
-
-const test = new Test()
-test.insert('hello')
-
-
-
-
-
-
-
-
-router.post('/api', graphqlKoa({schema, rootValue: root}))
-router.get('/api', graphqlKoa({schema, rootValue: root}))
+/** graphql 调试工具 */
+router.get('/graphiql', graphiqlKoa({ endpointURL: '/api' }))
 
 app.use(router.routes())
 app.use(router.allowedMethods())
 
 app.listen(3000)
-
-
