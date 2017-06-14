@@ -52,4 +52,5 @@ MongoClient.connect(DB_URL + '/spoc', (err, db) => {
     }
     DB.setConnection(db)
     app.listen(3000)
+    console.log('app has listened on localhost:3000')
 })

@@ -8,3 +8,14 @@ type Source {
     # 资源链接
     url: String
 }
+
+input SourceInput {
+    # 资源类型
+    type: Int
+    # 名称
+    name: String
+    # 介绍，补充说明
+    introduce: String
+    # 资源链接
+    url: String
+}

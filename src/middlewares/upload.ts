@@ -37,22 +37,23 @@ export async function Upload(ctx: KoaRouter.IRouterContext, next: () => Promise<
         }
         return
     }
-    const fileTypes = fields.types.split(',')
+    const fileTypes: string[] = fields.types.split(',')
+
     try {
         const qiniuFiles = Object.keys(files).map(async (fileKey: any, index: number) => {
             
             const file = files[fileKey]
             const hashName = await Qiniu.getEtag(Fs.readFileSync(file.path))
-            console.log(file)
+            //console.log(file)
             
             // 替换成hash name
             const fileName = file.name.replace(/.*(\.\w*)$/, `${hashName}$1`)
             
-            return await Qiniu.uploadFile(fileName, file.path)
+            return await Qiniu.uploadFile(fileName, file.path, fileTypes[index])
         })
         
         const filesName = (await Promise.all(qiniuFiles)).map(file => file.key)
-
+        console.log('上传成功')
         ctx.status = 200
         ctx.body = {
             status: 1,

@@ -13,7 +13,7 @@ import HomeworkModels from '../models/Homework'
 export const resolversMap = {
     Query: {
         currentUser(obj: any, args: any, context: any) {
-            console.log('context...', context.user)
+            // console.log('context...', context.user)
             return context.user
         },
         user(obj: any, args: any, context: any) {
@@ -22,6 +22,10 @@ export const resolversMap = {
         course(obj: any, args: any, context: any) {
             const courseId = +args.id
             return CourseModels.getCourseById(courseId)
+        },
+        courseItem(obj: any, args: any, context: any) {
+            const itemId = args.id
+            return CourseModels.getCourseItemById(itemId)
         },
         homework(obj: any, args: any, context: any) {
             return HomeworkModels.getHomeworkById(args.id)
@@ -38,6 +42,10 @@ export const resolversMap = {
         addNewEpisodes(obj: any, {courseId, type, name}: any, context: any) {
 
             return CourseModels.addNewEpisode(courseId, type, name)
+        },
+        addNewCourseItem(obj: any, {episodeId, name, introduce, video, source}: any, context: any) {
+            console.log(episodeId, name, introduce, video, source)
+            return CourseModels.addNewCourseItem(episodeId, name, introduce, video, source)
         },
         selectCourse(obj: any, {courseId}: any, context: any) {
             return UserModels.selectOneCourse(1018, +courseId)

@@ -31,9 +31,15 @@ export const EpisodeItem: IResolver = {
         return obj.video
     },
     source(obj, args, context) {
+        if (!obj.source) {
+            return []
+        }
         return Course.getSourseById(obj.source)
     },
     homework(obj, args, context) {
+        if (!obj.homework) {
+            return []
+        }
         return Homework.getHomeworkById(obj.homework)
     }
 }

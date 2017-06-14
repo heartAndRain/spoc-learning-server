@@ -8,7 +8,6 @@ export const Course: IResolver = {
         return obj._id
     },
     name(obj, args, context) {
-        console.log(context)
         return obj.name
     },
     type(obj, args, context) {

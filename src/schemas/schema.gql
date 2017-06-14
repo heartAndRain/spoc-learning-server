@@ -6,6 +6,10 @@ type Query {
 
     # 获取课程信息
     course(id: ID!): Course
+
+    # 获取课程内容
+    courseItem(id: String!): EpisodeItem
+
     # 获取作业信息
     homework(id: ID!): Homework
     # 获取学科列表
@@ -27,6 +31,15 @@ type Mutation {
         courseId: Int!,
         type: Int!,
         name: String
+    ): Boolean
+
+    # 增加新的item
+    addNewCourseItem(
+        episodeId: String!,
+        name: String!
+        introduce: String
+        video: String!
+        source: [SourceInput]
     ): Boolean
     
     # 用户选课

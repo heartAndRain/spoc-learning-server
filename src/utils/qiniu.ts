@@ -5,23 +5,45 @@ qiniu.conf.SECRET_KEY = 'fq7kLgrEoKdaEj6LgwaRpZqorUP7LnMeGNJfph4_';
 
 const BUCKET_NAME = 'spoclearning'
 const IMAGE_BUCKET_NAME = 'spoclearning-image'
+const VIDEO_BUCKET_NAME = 'spoclearning-video'
+
+const pipleline = 'spoclearning'
 
 //构建上传策略函数
-function uptoken(bucket: string, key: string) {
-    var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key)
+function uptoken(key: string, fileType: string) {
+    
+	let putPolicy = new qiniu.rs.PutPolicy(`${BUCKET_NAME}:${key}`)
+
+	if (fileType === 'video') {
+
+		const videoDomainName = `${VIDEO_BUCKET_NAME}:${key}`
+		putPolicy = new qiniu.rs.PutPolicy(videoDomainName)
+	
+		let fops = "avthumb/m3u8/segtime/10/ab/128k/ar/44100/acodec/libfaac/r/30/vb/640k/vcodec/libx264/stripmeta/0"
+		const saveas_key = qiniu.util.urlsafeBase64Encode(videoDomainName); 
+		fops = fops+'|saveas/'+saveas_key;
+
+		putPolicy.persistentOps = fops;
+ 		putPolicy.persistentPipeline = pipleline;
+
+	} else if (fileType === 'image') {
+		const videoDomainName = `${IMAGE_BUCKET_NAME}:${key}`
+		putPolicy = new qiniu.rs.PutPolicy(videoDomainName)
+	}
+
     return putPolicy.token()
 }
 
-export async function uploadFile(fileName: string, filePath: string) {
+export async function uploadFile(fileName: string, filePath: string, fileType: string) {
     const extra = new qiniu.io.PutExtra()
-    const token = uptoken(BUCKET_NAME, fileName)
+    const token = uptoken(fileName, fileType)
 
     return new Promise<any>((resolve, reject) => {
         qiniu.io.putFile(token, fileName, filePath, extra, function(err: any, ret: any) {
             if (!err) {
                 // 上传成功， 处理返回值
                 //console.log('上传成功')
-                // console.log(ret.hash, ret.key, ret.persistentId)
+                console.log(ret)
 
                 resolve({key: ret.key, hash: ret.hash})
             } else {
