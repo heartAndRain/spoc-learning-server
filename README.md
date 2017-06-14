@@ -2,11 +2,13 @@
 
 ## Install
 
+`npm install -g ts-node`
+
+`npm install -g typings`
+
 `npm install`
 
-then
-
-`npm install typings && typings install`
+`typings install`
 
 ## Run
 
